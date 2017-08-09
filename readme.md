@@ -46,4 +46,3 @@ Our baseline model detects fraud by assigning probabilities to instances that we
 * make_models2.py: Python script that imports the data, develops the model, and stores the model.
 * predict.py: Python script that reads in and vectorizes a single instance, and predicts the probability that the event is fraud.
 * app.py: Python script that retrieves new data from server, calls predict.py, and displays predictions. 
-* presentation.pdf: Presentation deck with a summary of our process and findings.
