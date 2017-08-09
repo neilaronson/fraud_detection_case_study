@@ -5,3 +5,5 @@
 *.swp
 *.json
 .json
+*.pkl
+*.csv
