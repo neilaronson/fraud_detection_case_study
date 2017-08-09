@@ -223,6 +223,7 @@ class DataCleaning(object):
         if not test:
             return self.df
         # test mode, don't oversample
+        self.drop_some_cols(['acct_type'])
         y = self.df.pop('fraud').values
         X = self.df.values
 

@@ -293,8 +293,8 @@ def main(models_made=False):
     dc_train = DataCleaning(path)
     X_train, y_train = dc_train.clean()
 
-    # dc_test = DataCleaning(path, training=False)
-    #X_test, y_test = dc_test.clean(predict=True, test=True)
+    dc_test = DataCleaning(path, training=False)
+    X_test, y_test = dc_test.clean(predict=True, test=True)
 
     # dc_train_reg = DataCleaning(path)
     # X_train_reg, y_train_reg = dc_train_reg.clean(regression=True)
@@ -303,39 +303,40 @@ def main(models_made=False):
     # X_test_reg, y_test_reg = dc_test_reg.clean(regression=True)
 
     train_col_names = dc_train.get_column_names()
-    print train_col_names
-    #train_col_names_reg = dc_train_reg.get_column_names()
-    if models_made:
-        pipe = Pipeline([])
-        model_folder = "model_files/"
-        for model_file in os.listdir(model_folder):
-            pipe.train_models.append(model_file)
-        plot_rocs([])
-        return
+    # print train_col_names
+    # #train_col_names_reg = dc_train_reg.get_column_names()
+    # if models_made:
+    #     pipe = Pipeline([])
+    #     model_folder = "model_files/"
+    #     for model_file in os.listdir(model_folder):
+    #         pipe.train_models.append(model_file)
+    #     plot_rocs([])
+    #     return
+    # #
+    # rf = RandomForestClassifier
+    # gb = GradientBoostingClassifier
+    # logr = LogisticRegression
+    # svm_model = svm.SVC
     #
-    rf = RandomForestClassifier
-    gb = GradientBoostingClassifier
-    logr = LogisticRegression
-    svm_model = svm.SVC
-
-    pipe = Pipeline([gb])
-    pipe.fit_predict(X_train, y_train)
-    pipe.print_cv_results(train_col_names, X_train, y_train)
-
-    for trained_model in pipe.trained_models:
-        p = re.compile(r"(.*)\(.*")
-        model_name = re.match(p, str(trained_model)).group(1)
-        filename = "model_" + model_name + ".pkl"
-        with open(filename, 'w') as f:
-            pickle.dump(trained_model, f)
+    # pipe = Pipeline([gb])
+    # pipe.fit_predict(X_train, y_train)
+    # pipe.print_cv_results(train_col_names, X_train, y_train)
+    #
+    # for trained_model in pipe.trained_models:
+    #     p = re.compile(r"(.*)\(.*")
+    #     model_name = re.match(p, str(trained_model)).group(1)
+    #     filename = "model_" + model_name + ".pkl"
+    #     with open(filename, 'w') as f:
+    #         pickle.dump(trained_model, f)
 
     # code for final test
-    # with open('model.pkl') as f:
-    #     model = pickle.load(f)
-    # pipe = Pipeline([])
-    # pipe.trained_models.append(model)
-    # test_scores = pipe.score(X_test, y_test)
-    # print test_scores
+    with open('model_files/model_SVC.pkl') as f:
+        model = pickle.load(f)
+    pipe = Pipeline([])
+    pipe.trained_models.append(model)
+    import ipdb; ipdb.set_trace()
+    test_scores = pipe.score(X_test, y_test)
+    print test_scores
     # pipe2 = Pipeline([logr])
     # pipe2.fit_predict(X_train_reg, y_train_reg)
     # pipe2.print_cv_results(train_col_names_reg, X_train_reg, y_train_reg)
